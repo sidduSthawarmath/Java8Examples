@@ -16,6 +16,5 @@ public class ForEachExample {
 
 		//Display all names
 		names.forEach(name -> System.out.println(name));
-
 	}
 }
