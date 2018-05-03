@@ -4,7 +4,7 @@ package com.test.java8.foreach;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForEachExample {
+public class ForEachExample111 {
 
 	public static void main(String[] args) {
 
