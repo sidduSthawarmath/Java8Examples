@@ -101,5 +101,23 @@ In JDK 1.8 version onwards
 	           (Example : hashcode(), wait(), toString() etc)
 	           it gives compilation error because child classes already having the
 	           these method from Object class so it will not take from interface.
-	           
-	           
+	     
+	     
+     If default method are present in two interfaces with same name and child class
+     implements both interfaces then child class must override default method.
+     if we need to call any default method of the interface in child class
+     then we can use syntax like
+     
+     <inetrfaceName>.super.<methodName>  
+      
+      interface A	                  interface B           
+	   m1(){ Sysout("A method") }            m1(){Sysout("B method")}
+	       \                           /
+	        \                         /
+	          \                      /
+		             interface c
+		              m1()
+		              {
+		              A.super.m1();  //prints as output "A method"
+		              B.super.m1();  //Prints as output "B method"
+		              }
