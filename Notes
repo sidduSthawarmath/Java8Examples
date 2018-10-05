@@ -258,7 +258,7 @@ Function:
   Method:
      public R apply(T t);
             
-  Example:
+  Example 1:
    
 		//Print string into upper case
 		//Print string length
@@ -284,7 +284,51 @@ Function:
 		 Number of letters 'Welcome to java' :15
 		 Square of '5' :25
    	     
-            
+   	     
+   	     
+   	 Example 2: Find grade of the student
+   	 
+		 public class GradeOfStudent {
+			public static void main(String[] args) {
+		
+				// Predicate Declarations
+				Predicate<Integer> firstClass = marks -> marks >= 60;
+				Predicate<Integer> secondClass = marks -> marks >= 50;
+				Predicate<Integer> thirdClass = marks -> marks >= 35;
+		
+				// Function declaration
+				Function<Student, String> findGradeFunction = student -> {
+					if (firstClass.test(student.marks)) {
+						return "FirstClass";
+					} else if (secondClass.test(student.marks)) {
+						return "secondClass";
+					} else if (thirdClass.test(student.marks)) {
+						return "thirdClass";
+					} else {
+						return "Fail";
+					}
+		
+				};
+		
+				// Finding the Grade of the student
+				System.out.println("Result: " + findGradeFunction.apply(new Student("Siddu", 90)));
+		
+			}
+		
+		}
+		
+		class Student {
+			String name;
+			int marks;
+			public Student(String name, int marks) {
+				this.name = name;
+				this.marks = marks;
+			}
+		}
+		   	 	    
+        
+        output:
+        	    Result: FirstClass
        
        
        
