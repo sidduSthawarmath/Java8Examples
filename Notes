@@ -1,0 +1,105 @@
+Lambda expression:
+----------------------------------------
+Lambda expression is 
+	- Not having modifiers(such as public, private & protected)
+	- Not having return type(void, int, float)
+	- Not having even function name also
+
+Example : 
+    public void add(int a, int b)
+	    {
+	    retun a+b;
+	    }
+    
+    In Lambda exp:
+    (a,b)->a+b;
+ 
+    
+    
+    
+Functional interface:
+----------------------------- 
+ Functional interface is a interface it should have only one abstract method
+ and it may or may not have static or default methods. 
+ (Example: Runnable, Comparator, Comparable)
+	 - @FunctionalInterface indicate that interface should rules of the functional
+		interface
+     - Functional interface should have only One abstract method
+     - It may have N number of default and static methods
+     - Functional interface have extends of some other interface also but
+       condition is that if its parent already have One abstract methods
+       then it should not have abstract method.
+       
+       
+  Example :
+  
+		public class FunctionalInterfaceExample {
+			public static void main(String[] args) {
+				Message message = (name) -> System.out.println("Welcome to java8 " + name);
+				message.welcomeMsg("Siddu");
+			}
+		}
+				
+		@FunctionalInterface
+		interface Message {
+			public void welcomeMsg(String name);
+		}
+       
+       output:
+       Welcome to java8 Siddu
+       
+       
+ 
+ Default Methods(Virtual extension methods/Defender methods):
+ ------------------
+ Until JDK 1.7 Version
+ 	void m1();
+ 	public void m1();
+ 	abstract void m1();
+ 	public abstract void m1();
+ 	
+ 	
+In JDK 1.8 version onwards
+	Related to methods:
+	    in jdk1.8 : default methods are allowed and static methods are also allowed
+	    in jdk1.9 : private methods are also allowed
+	    
+	Related to variables:
+	     public static final always in JDK 1.7, 1.8 & 1.9 also
+	
+	
+	 Without affecting implementation classes, if we want to add new
+	 method to the interface then we should go for default method concept.
+	 
+	 
+	 Example:
+	 		interface Interf {
+				default void m1() {
+					System.out.println("This is default method");
+				}
+			}
+			
+			public class DefaultMethodsExample implements Interf {
+				public void m1() {
+					System.out.println("This is default method overrided method");
+				}
+				public static void main(String[] args) {
+					Interf interf = new DefaultMethodsExample();
+					interf.m1();
+				}
+			}
+	 
+	 		output:
+	        This is default method overrided method
+	        
+	        
+	      Note:
+	         - default is not a modifier
+	         - While overriding default method child class method should have modifier
+	         	as public only otherwise it gives compilation error
+	         - We can't declare or define default method as methods of the object class
+	           (Example : hashcode(), wait(), toString() etc)
+	           it gives compilation error because child classes already having the
+	           these method from Object class so it will not take from interface.
+	           
+	           
