@@ -121,3 +121,52 @@ In JDK 1.8 version onwards
 		              A.super.m1();  //prints as output "A method"
 		              B.super.m1();  //Prints as output "B method"
 		              }
+		              
+		              
+static methods
+------------------------------
+  - class vs interface
+       interface is not heavy weight component as compared to class because 
+       it never contains constructor block, static block, instance block
+       
+  - static method are no where related to object. In such cases instead of going class
+  we can go for interface concept
+     
+     interface StaticMethodDemo {
+			public static void display() {
+				System.out.println("This is static method");
+			}
+		}
+
+	public class StaticMethodsExample implements StaticMethodDemo {
+		public static void main(String[] args) {
+			StaticMethodDemo.display();
+				}
+		}
+		
+    - In above example static method belongs to the interface it will not inherited to
+      the child class. So if we want to call that method means we must and should use
+      <interfaceName>.<staticMethodName> there is no other ways.
+      
+      
+		
+		   
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
