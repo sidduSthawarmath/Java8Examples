@@ -1,10 +1,11 @@
 package com.test.java8.drg;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class GradeOfStudent {
-
+public class GradeOfStudentUsingConsumer {
+	
 	public static void main(String[] args) {
 
 		// Predicate Declarations
@@ -26,18 +27,13 @@ public class GradeOfStudent {
 
 		};
 
-		// Finding the Grade of the student
-		System.out.println("Result: " + findGradeFunction.apply(new Student("Siddu", 90)));
+		// Consumer for printing the result
+		Consumer<Student> printStudent = student -> {
+			System.out.println("Result: " + findGradeFunction.apply(student));
+		};
 
+		// Consumer called for result verification
+		printStudent.accept(new Student("Siddu", 90));
 	}
 
-}
-
-class Student {
-	String name;
-	int marks;
-	public Student(String name, int marks) {
-		this.name = name;
-		this.marks = marks;
-	}
 }

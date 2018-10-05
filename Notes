@@ -151,10 +151,11 @@ static methods
   
  Predefined functional interfaces(It should have only one abstract method)
  -------------------------------------
- 	Predicate
- 	Function
- 	Consumer
+ 	Predicate  (input any data type of value and always return boolean value)
+ 	Function   (input take any data type of value and returns any data type of value not boolean )
+ 	Consumer   (input takes any data type but not returns any value)
  	Producer
+ 	
       Two argument predefined functional interfaces:
       -----------------------------------------------
       BiPredicate
@@ -364,10 +365,57 @@ Function:
        
        
        
+
+Consumer
+-----------
+  	
+  	Consumer always going to take some input value and won't return any value 
+  
+	Method:
+	 
+	 public void accept(T t);
        
        
+       Example : print student grade
+        
+		   public class GradeOfStudentUsingConsumer {
+			
+			public static void main(String[] args) {
+		
+				// Predicate Declarations
+				Predicate<Integer> firstClass = marks -> marks >= 60;
+				Predicate<Integer> secondClass = marks -> marks >= 50;
+				Predicate<Integer> thirdClass = marks -> marks >= 35;
+		
+				// Function declaration
+				Function<Student, String> findGradeFunction = student -> {
+					if (firstClass.test(student.marks)) {
+						return "FirstClass";
+					} else if (secondClass.test(student.marks)) {
+						return "secondClass";
+					} else if (thirdClass.test(student.marks)) {
+						return "thirdClass";
+					} else {
+						return "Fail";
+					}
+		
+				};
+		
+				// Consumer for printing the result
+				Consumer<Student> printStudent = student -> {
+					System.out.println("Result: " + findGradeFunction.apply(student));
+				};
+		
+				// Consumer called for result verification
+				printStudent.accept(new Student("Siddu", 90));
+			}
+		
+		}
+        
        
-       
+       output :
+              Result: FirstClass
+        		
        
        
        
