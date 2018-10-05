@@ -154,14 +154,14 @@ static methods
  	Predicate  (input any data type of value and always return boolean value)
  	Function   (input take any data type of value and returns any data type of value not boolean )
  	Consumer   (input takes any data type but not returns any value)
- 	Producer
+ 	Supplier
  	
       Two argument predefined functional interfaces:
       -----------------------------------------------
       BiPredicate
       BiFunction
       BiConsumer
-      BiProducer
+      BiSupplier
       
       Primitive predefined functional interfaces:
       ---------------------------------------------
@@ -453,8 +453,110 @@ Consumer
 				OM movie is running 100 days
 				OM movie next part also coming
 				
-		   
- 
+
+
+Supplier:
+------------
+   It will supply my required object without taking any input.
+   
+   Method:
+      
+      public R get();
+      
+      
+      Example: OTP generation
+      
+		public class SupplierExample {
+			public static void main(String[] args) {
+				Supplier<String> generateOTP = () -> {
+					String otp = "";
+					for (int i = 0; i < 6; i++) {
+						otp = otp + (int) (Math.random() * 10);
+					}
+					return otp;
+				};
+		
+				System.out.println("Generated OTP: " + generateOTP.get());
+				System.out.println("Generated OTP: " + generateOTP.get());
+			}
+		}
+		
+		output:
+				Generated OTP: 407149
+				Generated OTP: 063823
+				      
+		      
+    
+    
+    Two argument  functional interface
+    ---------------------------------
+    
+    BiPredicate:
+    --------------
+	    Normal predicate can take only one input argument and perform some conditional check.
+	    Sometime our program requirement is we have to take two input argument and perform some conditional check
+	    for these we should go for BiPredicate. BiPredicate is exactly same as predicate but it will take two argument. 
+	      
+      Method:
+         public boolean test(T1 t1, T2 t2);
+       
+       Example: Some of two number is even or not
+        
+                public class BiPredicateExample {
+					public static void main(String[] args) {
+						BiPredicate<Integer,Integer> evenOrNotPredicate=(n1,n2)->(n1+n2)%2==0;
+						System.out.println(evenOrNotPredicate.test(10,20));
+						System.out.println(evenOrNotPredicate.test(7,2));
+					}
+				}
+		     
+		     output:
+		         true
+		         false
+        
+   				
+	
+	BiFunction:
+	-----------
+	  It will take two argument and returns the results
+	  
+	  Method:
+	   public R apply(T1 t1,T2 t2);
+	   
+	   
+	   Example: Take name and phone num as argument and return employee object.
+	   
+		  public class BiFunctionExample {
+				public static void main(String[] args) {
+					
+			        //Passing two String argument and return Employee
+					BiFunction<String, String, Employee> getEmpFunction = (name, phoneNum) -> new Employee(name, phoneNum);
+					
+					System.out.println(getEmpFunction.apply("Siddu", "123456789"));
+				}
+			
+			}
+			
+			
+			class Employee {
+				String name;
+				String phoneNum;
+			
+				public Employee(String name, String phoneNum) {
+					this.name = name;
+					this.phoneNum = phoneNum;
+				}
+			
+				@Override
+				public String toString() {
+					return "Employee [name=" + name + ", phoneNum=" + phoneNum + "]";
+				}
+			}
+	  
+        
+          output:
+              Employee [name=Siddu, phoneNum=123456789]
+              
        
        
        
