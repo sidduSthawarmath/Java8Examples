@@ -148,10 +148,106 @@ static methods
       the child class. So if we want to call that method means we must and should use
       <interfaceName>.<staticMethodName> there is no other ways.
       
+  
+ Predefined functional interfaces(It should have only one abstract method)
+ -------------------------------------
+ 	Predicate
+ 	Function
+ 	Consumer
+ 	Producer
+      Two argument predefined functional interfaces:
+      -----------------------------------------------
+      BiPredicate
+      BiFunction
+      BiConsumer
+      BiProducer
       
-		
-		   
+      Primitive predefined functional interfaces:
+      ---------------------------------------------
+	  IntPredicate
+	  IntFunction
+	  IntConsumer
+	  ...
+	  
+	  
+Predicate :
+----------	
+   Predicate is used for check the condition.
+   Method :
+       public boolean test(T t);
+     
+     Example 1: check even or odd number
+		public class PredicateExample {
+			public static void main(String[] args) {
+				Predicate<Integer> predicate = num -> num % 2 == 0;
+				System.out.println("10 is even number : " + predicate.test(10));
+				System.out.println("5 is even number : " + predicate.test(5));
+			}
+		}
+     
+     output:
+        10 is even number : true
+		5 is even number : false
+
+
+    Example 2: check employee salary is greate than 50k and gender is Male
+            Predicate<Employee> predicate = e -> e.getSalary()>50000 && e.getGender().equals("M");
+            predicate.test(e);      
+   
+   
+     Predicate Joining:
+     ------------------
+     We can combine multiple of predicate to to check the condition -> predicate joining
+     
+     Example:
+    	predicate p1 -> Check the number is even or not
+    	predicate p2- > checks the number is greater than 20
        
+       we can join as:
+        'and' is check both should be true
+         	p1.and(p2).test(10);
+        
+        'or' check if any one of the true
+        	p1.or(p2).test(10);
+        
+        'negate' gives the reverse result
+        	p1.negate()
+        
+   
+   
+	  Example :
+			 public class PredicateJoiningExample {
+					public static void main(String[] args) {
+						int[] num = { 10, 5, 12, 6, 21 };
+						// Number is even predicate
+						Predicate<Integer> evenNumCheck = n -> n % 2 == 0;
+				
+						// Num is greater than 10 predicate
+						Predicate<Integer> numGreaterThan10 = n -> n > 10;
+				
+						for (int n : num) {
+				
+							// 'and' Predicate joining
+							if (evenNumCheck.and(numGreaterThan10).test(n)) {
+								System.out.println("Number is even and greater than 10:" + n);
+							}
+				
+							// 'or' Predicate joining
+							if (evenNumCheck.or(numGreaterThan10).test(n)) {
+								System.out.println("Number may be even or greater than 10:" + n);
+							}
+						}
+					}
+				}
+	  
+	  	
+		   output:
+		   			Number is even and greater than 10:12
+					Number may be even or greater than 10:10
+					Number may be even or greater than 10:12
+					Number may be even or greater than 10:6
+					Number may be even or greater than 10:21
+					       
        
        
        
