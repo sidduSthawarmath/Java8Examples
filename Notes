@@ -1,3 +1,31 @@
+Concepts covered
+----------------
+1.Lambda Expression
+2.FunctionalInterface
+3.Default methods and static methods
+4.Predefined function interfaces
+    a.Predicate
+    b.Function
+    c.Consumer
+    d.Supplier
+  For two arguments BiPredicate,BiFunction and BiConsumer
+5.Optional class
+6.Streams
+	a.Creating Java Streams
+	b.Converting Java Stream to Collection or Array
+	c.Java Stream Intermediate Operations
+	d.Java Stream Terminal Operations  
+    e.Java Stream Short Circuiting Operations
+
+
+
+
+
+
+
+
+
+
 Lambda expression:
 ----------------------------------------
 Lambda expression is 
