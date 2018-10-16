@@ -22,6 +22,18 @@ public class StreamIntermediateOperations {
 			return num * 2;
 		}).forEach(i -> System.out.println(i));
 
+		
+		//Converts the elements into double, int, long 
+		//i.e  mapToDouble, mapToInt and mapToLong for map
+		// flatMapToDouble, flatMapToInt and flatMapToLong for flatMap
+		System.out.println("\n---- mapToDouble---");
+		numList.stream().mapToDouble(num -> {
+			return num * 2;
+		}).forEach(i -> System.out.println(i));
+
+		
+		
+		
 		System.out.println("\n----Sorted-------");
 
 		/*

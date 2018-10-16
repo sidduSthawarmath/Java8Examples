@@ -726,118 +726,147 @@ that's why we need flattening. When you flat a Stream of Stream, it gets convert
 	
 	Example:
 	
-	public class StreamIntermediateOperations {
-
-	public static void main(String[] args) {
-
-		List<Integer> numList = Arrays.asList(2, 5, 3, 15, 35);
-
-		System.out.println("\n----Filter-------");
-		/* filter -> We can use filter() method to apply predicate */
-		numList.stream().filter(num -> num % 2 != 0).forEach(i -> System.out.println(i));
-
-		System.out.println("\n----Map-------");
-		/* map -> We can use map to apply the function on the stream */
-		numList.stream().map(num -> {
-			return num * 2;
-		}).forEach(i -> System.out.println(i));
-
-		System.out.println("\n----Sorted-------");
-
-		/*
-		 * Sorted -> We can use sorted() to sort the stream elements by passing Comparator argument.
-		 */
-
-		// Ascending
-		System.out.println("\nAscending Oder:");
-		numList.stream().sorted().forEach(i -> System.out.println(i));
-
-		System.out.println("\nDescending Oder:");
-		numList.stream().sorted(Comparator.reverseOrder()).forEach(i -> System.out.println(i));
-
-		System.out.println("\nCustom Comparator by lambda expression:");
-		numList.stream().sorted((Integer num1, Integer num2) -> {
-			if (num1 > num2)
-				return 1;
-			else if (num1 < num2)
-				return -1;
-			else
-				return 0;
-		}).forEach(i -> System.out.println(i));
-
-		System.out.println("\nCustom Comparator by class:");
-		numList.stream().sorted(new CustomComparator()).forEach(i -> System.out.println(i));
-
-		System.out.println("-------------------------------------");
-
-		System.out.println("--------Flat Map----------");
-		List<String> teamA = Arrays.asList("Siddu", "Shivu");
-		List<String> teamB = Arrays.asList("Mahesh", "Sharnu");
-
-		List<List> teams = new ArrayList<>();
-		teams.add(teamA);
-		teams.add(teamB);
-		System.out.println("Team A & B :" + teams);
-
-		
-		// Here selecting name of the player by each team considering name
-		// should have only 5 characters and among these selected name
-		// considering name starts with "Si"
-		List<String> combinedSingleTeam = (List<String>) teams.stream()
-				.flatMap(list -> list.stream().filter(name -> name.length() == 5)).filter(name -> name.startsWith("Si"))
-				.collect(Collectors.toList());
-		System.out.println("combinedSingleTeam :" + combinedSingleTeam);
-	}
-}
-
-
-OUTPUT:
-			----Filter-------
-			5
-			3
-			15
-			35
+			public class StreamIntermediateOperations {
 			
-			----Map-------
-			4
-			10
-			6
-			30
-			70
+				public static void main(String[] args) {
 			
-			----Sorted-------
+					List<Integer> numList = Arrays.asList(2, 5, 3, 15, 35);
 			
-			Ascending Oder:
-			2
-			3
-			5
-			15
-			35
+					System.out.println("\n----Filter-------");
+					/* filter -> We can use filter() method to apply predicate */
+					numList.stream().filter(num -> num % 2 != 0).forEach(i -> System.out.println(i));
 			
-			Descending Oder:
-			35
-			15
-			5
-			3
-			2
+					System.out.println("\n----Map-------");
+					/* map -> We can use map to apply the function on the stream */
+					numList.stream().map(num -> {
+						return num * 2;
+					}).forEach(i -> System.out.println(i));
 			
-			Custom Comparator by lambda expression:
-			2
-			3
-			5
-			15
-			35
+					
+					//Converts the elements into double, int, long 
+					//i.e  mapToDouble, mapToInt and mapToLong for map
+					// flatMapToDouble, flatMapToInt and flatMapToLong for flatMap
+					System.out.println("\n---- mapToDouble---");
+					numList.stream().mapToDouble(num -> {
+						return num * 2;
+					}).forEach(i -> System.out.println(i));
 			
-			Custom Comparator by class:
-			2
-			3
-			5
-			15
-			35
-			-------------------------------------
-			--------Flat Map----------
-			Team A & B :[[Siddu, Shivu], [Mahesh, Sharnu]]
-			combinedSingleTeam :[Siddu]
+					
+					
+					
+					System.out.println("\n----Sorted-------");
+			
+					/*
+					 * Sorted -> We can use sorted() to sort the stream elements by passing
+					 * Comparator argument.
+					 */
+			
+					// Ascending
+					System.out.println("\nAscending Oder:");
+					numList.stream().sorted().forEach(i -> System.out.println(i));
+			
+					System.out.println("\nDescending Oder:");
+					numList.stream().sorted(Comparator.reverseOrder()).forEach(i -> System.out.println(i));
+			
+					System.out.println("\nCustom Comparator by lambda expression:");
+					numList.stream().sorted((Integer num1, Integer num2) -> {
+						if (num1 > num2)
+							return 1;
+						else if (num1 < num2)
+							return -1;
+						else
+							return 0;
+					}).forEach(i -> System.out.println(i));
+			
+					System.out.println("\nCustom Comparator by class:");
+					numList.stream().sorted(new CustomComparator()).forEach(i -> System.out.println(i));
+			
+					System.out.println("-------------------------------------");
+			
+					System.out.println("--------Flat Map----------");
+					List<String> teamA = Arrays.asList("Siddu", "Shivu");
+					List<String> teamB = Arrays.asList("Mahesh", "Sharnu");
+			
+					List<List<String>> teams = new ArrayList<>();
+					teams.add(teamA);
+					teams.add(teamB);
+					System.out.println("Team A & B :" + teams);
+			
+					// Using Stream flatMap(Function maper)
+					/*
+					 * the function used by map operation returns a Stream of values or list
+					 * of values rather than single value, that's why we need flattening.
+					 * When you flat a Stream of Stream, it gets converted into Stream of
+					 * values.
+					 */
+			
+					// Here selecting name of the player by each team considering name
+					// should have only 5 characters and among these selected name
+					// considering name starts with "Si"
+					List<String> combinedSingleTeam = (List<String>) teams.stream()
+							.flatMap(list -> list.stream().filter(name -> name.length() == 5)).filter(name -> name.startsWith("Si"))
+							.collect(Collectors.toList());
+					System.out.println("combinedSingleTeam :" + combinedSingleTeam);
+				}
+			}
+				
+				
+	output:
+				
+				----Filter-------
+				5
+				3
+				15
+				35
+				
+				----Map-------
+				4
+				10
+				6
+				30
+				70
+				
+				---- mapToDouble---
+				4.0
+				10.0
+				6.0
+				30.0
+				70.0
+				
+				----Sorted-------
+				
+				Ascending Oder:
+				2
+				3
+				5
+				15
+				35
+				
+				Descending Oder:
+				35
+				15
+				5
+				3
+				2
+				
+				Custom Comparator by lambda expression:
+				2
+				3
+				5
+				15
+				35
+				
+				Custom Comparator by class:
+				2
+				3
+				5
+				15
+				35
+				-------------------------------------
+				--------Flat Map----------
+				Team A & B :[[Siddu, Shivu], [Mahesh, Sharnu]]
+				combinedSingleTeam :[Siddu]
+					
 
 
 
@@ -853,9 +882,85 @@ Commonly used terminal methods are :
 	max, 
 	findFirst, 
 	anyMatch, 
-	allMatch etc. 
+	allMatch etc.
+	
+	You can identify terminal methods from the return type, they will never return a Stream.
+	
+	Example:
+	
+		public class StreamTerminalOperations {
+				public static void main(String[] args) {
+			
+					List<Integer> numbers = Arrays.asList(5, 1, 2, 4, 10, 7);
+			
+					// for each
+					System.out.println("For Each");
+					numbers.stream().forEach(num -> System.out.println(num));
+			
+					// min
+					Optional<Integer> minNum = numbers.stream().min(Comparator.naturalOrder());
+					System.out.println("\nMin Num:" + minNum.get());
+			
+					// max
+					Optional<Integer> maxNum = numbers.stream().max(Comparator.naturalOrder());
+					System.out.println("\nMax Num:" + maxNum.get());
+			
+					// Checks the first element which is greater the 5(it won't check for
+					// sorting order)
+					// It will get first occurred element only
+					Optional<Integer> firstOccEle = numbers.stream().filter(num -> num > 5).findFirst();
+					System.out.println("\nFind First:" + firstOccEle.get());
+			
+					// Checks the first element which is greater the 5(it won't check for
+					// sorting order)
+					// It wont check for first occurrence, Randomly it will get element
+					Optional<Integer> existedEle = numbers.stream().filter(num -> num > 5).findFirst();
+					System.out.println("\nFind Any:" + existedEle.get());
+			
+					//All the element should match the condition then it returns true
+					boolean allAreEvenNumber = numbers.stream().allMatch(num -> num % 2 == 0);
+					System.out.println("\nAll are even numbers in the List:" + allAreEvenNumber);
+			
+					//If any one element match then it returns true
+					boolean isAnyEvenNumber = numbers.stream().anyMatch(num -> num % 2 == 0);
+					System.out.println("\nIs any even numbers in the List:" + isAnyEvenNumber);
+			
+					//None of the element should match the condition then only it returns true 
+					boolean noneEvenNumber = numbers.stream().noneMatch(num -> num % 2 == 0);
+					System.out.println("\nNone number is even number in the List:" + noneEvenNumber);
+					
+					//Converts the stream to array of elemnts
+					int[] numArray= numbers.stream().mapToInt(i->i.intValue()).toArray();
+					System.out.println("\ntoArray:"+Arrays.toString(numArray));
+					
+				}
+			}
 
-You can identify terminal methods from the return type, they will never return a Stream.
+	output:
+			For Each
+			5
+			1
+			2
+			4
+			10
+			7
+			
+			Min Num:1
+			
+			Max Num:10
+			
+			Find First:10
+			
+			Find Any:10
+			
+			All are even numbers in the List:false
+			
+			Is any even numbers in the List:true
+			
+			None number is even number in the List:false
+			
+			toArray:[5, 1, 2, 4, 10, 7]
+
 
 
 
@@ -866,12 +971,39 @@ Java Stream Short Circuiting Operations
 An intermediate operation is called short circuiting, if it may produce finite stream for an infinite stream.
 	1.limit()
 	2.skip()
+	
+	
+		public class StreamShortCircuitingOperations {
+			public static void main(String[] args) {
+		
+				List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+		
+				// The limit(long n) method of java.util.stream.Stream object returns a
+				// reduced stream of first n elements
+				System.out.println("Limit of 2 :");
+				numbers.stream().limit(2).forEach(i -> System.out.println(i));
+		
+				
+				// Stream of remaining elements after skipping first n elements
+				System.out.println("\nSkip of 2 :");
+				numbers.stream().skip(2).forEach(i -> System.out.println(i));
+		
+			}
+		}
+		
+	output :
+		Limit of 2 :
+			1
+			2
+			
+		Skip of 2 :
+			3
+			4
+			5
+			6
+	
+	 
+			
 
-A terminal operation is called short circuiting, if it may terminate in finite time for infinite stream.
-	anyMatch, 
-	allMatch, 
-	noneMatch, 
-	findFirst and 
-	findAny
 
 
