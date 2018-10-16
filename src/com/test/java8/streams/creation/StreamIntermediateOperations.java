@@ -55,12 +55,11 @@ public class StreamIntermediateOperations {
 		List<String> teamA = Arrays.asList("Siddu", "Shivu");
 		List<String> teamB = Arrays.asList("Mahesh", "Sharnu");
 
-		List<List> teams = new ArrayList<>();
+		List<List<String>> teams = new ArrayList<>();
 		teams.add(teamA);
 		teams.add(teamB);
 		System.out.println("Team A & B :" + teams);
 
-		
 		// Using Stream flatMap(Function maper)
 		/*
 		 * the function used by map operation returns a Stream of values or list
@@ -68,7 +67,12 @@ public class StreamIntermediateOperations {
 		 * When you flat a Stream of Stream, it gets converted into Stream of
 		 * values.
 		 */
-		List<String> combinedSingleTeam = (List<String>) teams.stream().flatMap(list -> list.stream())
+
+		// Here selecting name of the player by each team considering name
+		// should have only 5 characters and among these selected name
+		// considering name starts with "Si"
+		List<String> combinedSingleTeam = (List<String>) teams.stream()
+				.flatMap(list -> list.stream().filter(name -> name.length() == 5)).filter(name -> name.startsWith("Si"))
 				.collect(Collectors.toList());
 		System.out.println("combinedSingleTeam :" + combinedSingleTeam);
 	}

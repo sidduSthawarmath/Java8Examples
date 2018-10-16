@@ -668,7 +668,6 @@ Converting Java Stream to Collection or Array
 ----------------------------------------------
 	We can use java Stream collect() method to get List, Map or Set from stream.
      
-     
      public class ConvertingClassToCollectionOrArray {
 		public static void main(String[] args) {
 	
@@ -702,10 +701,145 @@ Most of the times, these operations are lazy in nature, so they start producing 
 send it to the next operation. Intermediate operations are never the final result producing operations.
 Commonly used intermediate operations are 
 	1.filter
-	2.map
-	3.sorted
+	2.sorted
+	3.map
 	4.flatMap
+
+1.Filter: 
+-----------
+ 	When we want to apply any condition or predicate on stream of elements then we will use Filters
+
+2.sorted :
+----------
+ 	When we want to sort the stream or apply the comparator on that then we will use sorted
+ 	
+
+3.map :
+--------
+ When we want to apply any function on stream(stream should return single value) of elements then we will use map
+  
+4.flatMap :
+--------
+	The function used by map operation returns a Stream of values or list of values rather than single value, 
+that's why we need flattening. When you flat a Stream of Stream, it gets converted into Stream of values.
+
 	
+	Example:
+	
+	public class StreamIntermediateOperations {
+
+	public static void main(String[] args) {
+
+		List<Integer> numList = Arrays.asList(2, 5, 3, 15, 35);
+
+		System.out.println("\n----Filter-------");
+		/* filter -> We can use filter() method to apply predicate */
+		numList.stream().filter(num -> num % 2 != 0).forEach(i -> System.out.println(i));
+
+		System.out.println("\n----Map-------");
+		/* map -> We can use map to apply the function on the stream */
+		numList.stream().map(num -> {
+			return num * 2;
+		}).forEach(i -> System.out.println(i));
+
+		System.out.println("\n----Sorted-------");
+
+		/*
+		 * Sorted -> We can use sorted() to sort the stream elements by passing Comparator argument.
+		 */
+
+		// Ascending
+		System.out.println("\nAscending Oder:");
+		numList.stream().sorted().forEach(i -> System.out.println(i));
+
+		System.out.println("\nDescending Oder:");
+		numList.stream().sorted(Comparator.reverseOrder()).forEach(i -> System.out.println(i));
+
+		System.out.println("\nCustom Comparator by lambda expression:");
+		numList.stream().sorted((Integer num1, Integer num2) -> {
+			if (num1 > num2)
+				return 1;
+			else if (num1 < num2)
+				return -1;
+			else
+				return 0;
+		}).forEach(i -> System.out.println(i));
+
+		System.out.println("\nCustom Comparator by class:");
+		numList.stream().sorted(new CustomComparator()).forEach(i -> System.out.println(i));
+
+		System.out.println("-------------------------------------");
+
+		System.out.println("--------Flat Map----------");
+		List<String> teamA = Arrays.asList("Siddu", "Shivu");
+		List<String> teamB = Arrays.asList("Mahesh", "Sharnu");
+
+		List<List> teams = new ArrayList<>();
+		teams.add(teamA);
+		teams.add(teamB);
+		System.out.println("Team A & B :" + teams);
+
+		
+		// Here selecting name of the player by each team considering name
+		// should have only 5 characters and among these selected name
+		// considering name starts with "Si"
+		List<String> combinedSingleTeam = (List<String>) teams.stream()
+				.flatMap(list -> list.stream().filter(name -> name.length() == 5)).filter(name -> name.startsWith("Si"))
+				.collect(Collectors.toList());
+		System.out.println("combinedSingleTeam :" + combinedSingleTeam);
+	}
+}
+
+
+OUTPUT:
+			----Filter-------
+			5
+			3
+			15
+			35
+			
+			----Map-------
+			4
+			10
+			6
+			30
+			70
+			
+			----Sorted-------
+			
+			Ascending Oder:
+			2
+			3
+			5
+			15
+			35
+			
+			Descending Oder:
+			35
+			15
+			5
+			3
+			2
+			
+			Custom Comparator by lambda expression:
+			2
+			3
+			5
+			15
+			35
+			
+			Custom Comparator by class:
+			2
+			3
+			5
+			15
+			35
+			-------------------------------------
+			--------Flat Map----------
+			Team A & B :[[Siddu, Shivu], [Mahesh, Sharnu]]
+			combinedSingleTeam :[Siddu]
+
+
 
 Terminal Operations
 ----------------------
@@ -722,6 +856,9 @@ Commonly used terminal methods are :
 	allMatch etc. 
 
 You can identify terminal methods from the return type, they will never return a Stream.
+
+
+
 
 
 Java Stream Short Circuiting Operations
