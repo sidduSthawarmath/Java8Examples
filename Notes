@@ -599,5 +599,142 @@ Supplier:
 		
 		output:
 			Employee [name=Siddu, salary=10500]
-         
-       
+			
+			
+			
+Optional
+----------
+	Java Optional is a container object which may or may not contain a non-null value. 
+If a value is present, isPresent() will return true and get() will return the value. 
+Stream terminal operations return Optional object. 
+
+	Some of these methods are:
+	1.Optional<T> reduce(BinaryOperator<T> accumulator)
+	2.Optional<T> min(Comparator<? super T> comparator)
+	3.Optional<T> max(Comparator<? super T> comparator)
+	4.Optional<T> findFirst()
+	5.Optional<T> findAny()
+	
+	
+	public class OptionalExm {
+		public static void main(String[] args) {
+			List<Integer> intValList= Arrays.asList(4,1,4,6,8,3);
+			
+			//Optional<T> reduce(BinaryOperator<T> accumulator)
+			Optional<Integer> additionVal= intValList.stream().reduce(Integer::sum);
+			System.out.println(additionVal.get());  //prints 26 (i.e sum of all elements)
+			
+			
+			//Optional<T> min(Comparator<? super T> comparator)
+			Optional<Integer> minVal=intValList.stream().min(Comparator.naturalOrder());
+			System.out.println(minVal.get());  // prints 1
+			
+		}
+}
+
+Streams:
+---------------------------------
+	
+	Creating Java Streams
+	---------------------
+		public class StreamCreationExample {
+			public static void main(String[] args) {
+		
+				// By Stream.Of()
+				Stream<Integer> intStream = Stream.of(1, 2, 4, 6);
+				intStream.forEach(i -> System.out.print(i + " "));
+				System.out.println("\n-------\n");
+		
+				// By Array
+				Integer[] intArray = { 1, 2, 4, 6 };
+				Stream<Integer> intArrayStream = Stream.of(intArray);
+				intArrayStream.forEach(i -> System.out.print(i + " "));
+				System.out.println("\n-------\n");
+		
+				// By collections
+				List<String> namesList = Arrays.asList("Siddu", "Shivu", "Sharnu");
+				Stream<String> namesStream = namesList.stream();
+				namesStream.forEach(name -> System.out.println(name));
+		
+				// We can use Stream.generate() and Stream.iterate() methods to create Stream.
+				Stream<String> stream1 = Stream.generate(() -> {return "abc";});
+				Stream<String> stream2 = Stream.iterate("abc", (i) -> i);
+			}
+		}
+
+
+
+Converting Java Stream to Collection or Array
+----------------------------------------------
+	We can use java Stream collect() method to get List, Map or Set from stream.
+     
+     
+     public class ConvertingClassToCollectionOrArray {
+		public static void main(String[] args) {
+	
+			List<Integer> intNumber = Arrays.asList(1, 20, 3, 11, 5, 6, 8);
+	
+			// Collect even number into separate list from the above list
+			List<Integer> evenNumList = intNumber.stream().filter(num -> num % 2 == 0).collect(Collectors.toList());
+			System.out.println(evenNumList);
+	
+			// Collect odd number into separate set from the above list
+			Set<Integer> oddNumSet = intNumber.stream().filter(num -> num % 2 != 0).collect(Collectors.toSet());
+			System.out.println(oddNumSet);
+	
+			// Square of each element from the above list
+			Map<Integer, Integer> squareOfNumber = intNumber.stream().collect(Collectors.toMap(i -> i, i -> i * i));
+			System.out.println(squareOfNumber);
+	
+			// converting list integer to array of integer
+			Integer[] intArray = intNumber.stream().toArray(Integer[]::new);
+			System.out.println(Arrays.toString(intArray));
+		}
+	}
+     
+
+
+
+Java Stream Intermediate 
+-------------------------------------------------
+	Java Stream API operations that returns a new Stream are called intermediate operations.
+Most of the times, these operations are lazy in nature, so they start producing new stream elements and 
+send it to the next operation. Intermediate operations are never the final result producing operations.
+Commonly used intermediate operations are 
+	1.filter
+	2.map
+	3.sorted
+	4.flatMap
+	
+
+Terminal Operations
+----------------------
+	Once the terminal method is called on a stream, it consumes the stream and after that we can’t use stream. 
+Terminal operations are eager in nature i.e they process all the elements in the stream before returning 
+the result. 
+Commonly used terminal methods are : 
+	forEach
+	toArray, 
+	min, 
+	max, 
+	findFirst, 
+	anyMatch, 
+	allMatch etc. 
+
+You can identify terminal methods from the return type, they will never return a Stream.
+
+
+Java Stream Short Circuiting Operations
+----------------------------------------
+An intermediate operation is called short circuiting, if it may produce finite stream for an infinite stream.
+	1.limit()
+	2.skip()
+
+A terminal operation is called short circuiting, if it may terminate in finite time for infinite stream.
+	anyMatch, 
+	allMatch, 
+	noneMatch, 
+	findFirst and 
+	findAny
+
+

@@ -35,5 +35,7 @@ public class FilterExample {
 		Predicate<Integer> predicate = num -> num == 8;
 		boolean isEixts = NUMBERS.stream().anyMatch(predicate);
 		System.out.println("8 num is exist:" + isEixts);
+		
+		
 	}
 }
