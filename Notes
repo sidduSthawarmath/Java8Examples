@@ -10,7 +10,8 @@ Concepts covered
     d.Supplier
   For two arguments BiPredicate,BiFunction and BiConsumer
 5.Optional class
-6.Streams
+6.Reduce
+7.Streams
 	a.Creating Java Streams
 	b.Converting Java Stream to Collection or Array
 	c.Java Stream Intermediate Operations
@@ -660,6 +661,40 @@ Stream terminal operations return Optional object.
 		}
 }
 
+
+
+Reduce
+--------
+	Reducing in the context of Java8 Streams refers to the process of combining all elements in the stream 
+repeatedly to produce a single value which is returned as the result of the reduction operation.
+
+Example :
+	public class ReduceExample {
+		public static void main(String[] args) {
+			List<Integer> numbers = Arrays.asList(1, 5, 2, 4);
+	
+			// Find max element
+			int maxNum = numbers.stream().reduce((x, y) -> x >= y ? x : y).get();
+			System.out.println("maxNum : " + maxNum);
+	
+			// Find min element
+			int minNum = numbers.stream().reduce((x, y) -> x <= y ? x : y).get();
+			System.out.println("minNum : " + minNum);
+	
+			// Find sum of all element
+			int sumOfAll = numbers.stream().reduce((x, y) -> x + y).get();
+			System.out.println("sumOfAll : " + sumOfAll);
+	
+		}
+	}
+	
+	output:
+		maxNum : 5
+		minNum : 1
+		sumOfAll : 12
+			
+	
+
 Streams:
 ---------------------------------
 	
@@ -779,9 +814,6 @@ that's why we need flattening. When you flat a Stream of Stream, it gets convert
 						return num * 2;
 					}).forEach(i -> System.out.println(i));
 			
-					
-					
-					
 					System.out.println("\n----Sorted-------");
 			
 					/*
@@ -1030,8 +1062,18 @@ An intermediate operation is called short circuiting, if it may produce finite s
 			5
 			6
 	
-	 
-			
+
+ParallelStream:
+----------------		
+ 	Parallel stream enables parallel computing that involves processing
+   elements concurrently in parallel with each element in a separate thread.
+   But this does not guarantee high performance and faster execution
+   every time. It again depends on the number of CPU cores available.
+
+   ParallelStream has a much higher overhead compared to a sequential
+   one.Parallel stream should be used only when there is a huge amount of
+   elements to process and there is a performance problem with processing
+   these elements. Also the parallel stream operations should be independent
 
 
 
