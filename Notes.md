@@ -932,7 +932,7 @@ that's why we need flattening. When you flat a Stream of Stream, it gets convert
 
 Terminal Operations
 ----------------------
-	Once the terminal method is called on a stream, it consumes the stream and after that we can’t use stream. 
+	Once the terminal method is called on a stream, it consumes the stream and after that we canÂ’t use stream. 
 Terminal operations are eager in nature i.e they process all the elements in the stream before returning 
 the result. 
 Commonly used terminal methods are : 
